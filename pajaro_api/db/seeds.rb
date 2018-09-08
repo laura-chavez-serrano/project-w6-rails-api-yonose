@@ -13,3 +13,9 @@ User.delete_all
     username: Faker::Superhero.name,
   )
 end
+
+11.times do
+  Twerp.create!(
+    twerp: Faker::MichaelScott.quote,
+  )
+end
