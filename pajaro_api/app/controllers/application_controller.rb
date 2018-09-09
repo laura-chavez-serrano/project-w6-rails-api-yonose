@@ -1,18 +1,25 @@
 class ApplicationController < ActionController::API 
 
   include ActionController::HttpAuthentication::Token::ControllerMethods
-  before_action :authenticate_token
+  # include ActionController::HttpAuthentication::Basic::ControllerMethods
 
-  def authenticate_token
-  
-      user = authenticate_with_http_token do |api_token, options|
-          User.find_by_api_token(token)
-          
-        end
-    
-        unless user
-          render json: { error: "Access Denied" }, status: :unauthorized
-        end
+  before_action :verify_authentication
+  # before_action :authenticate
+
+  # def authenticate
+  #   authenticate_or_request_with_http_basic do |username, password|
+  #     username == "amy" && password == "password"
+  #   end
+  # end
+
+  def verify_authentication
+    user = authenticate_with_http_token do |token, options|
+      User.find_by_api_token(token)
+    end
+
+    unless user
+      render json: { error: " FUERA! ACCESS DENIED" }, status: :unauthorized
+    end
   end
 
 end

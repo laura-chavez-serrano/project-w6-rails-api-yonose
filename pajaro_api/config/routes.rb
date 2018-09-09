@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   #resources :twerps
   namespace :api do
     namespace :v1 do
-      resources :users
+      resources :users do
+        resources :twerps do
+          resource :session, only: :create
+        end
+      end
     end
   end
 end
