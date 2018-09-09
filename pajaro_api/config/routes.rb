@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users do
         resources :twerps do
-          resource :session, only: :create
+          resources :comments do
+            resource :session, only: :create
+          end
         end
       end
     end
