@@ -6,16 +6,18 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.delete_all
+#User.delete_all
 
-15.times do
+200.times do
   User.create!(
     username: Faker::Superhero.name,
+    password: "123"
   )
 end
 
-11.times do
+150.times do
   Twerp.create!(
     twerp: Faker::MichaelScott.quote,
+    user_id: 45
   )
 end

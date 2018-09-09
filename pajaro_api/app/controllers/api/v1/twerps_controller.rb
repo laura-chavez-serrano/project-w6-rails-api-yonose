@@ -4,6 +4,8 @@ class Api::V1::TwerpsController < ApplicationController
   before_action :set_twerp, only: [:show, :update, :destroy]
 
   
+  helper_method :current_user
+
   def index
     @twerps = @user.twerps
     render json: @user.twerps
@@ -33,7 +35,16 @@ class Api::V1::TwerpsController < ApplicationController
   end
   
   def destroy
-    @twerp.destroy
+    byebug
+    if current_user == @user
+      @twerp.destroy 
+    end
+  end
+
+  protected 
+  def current_user
+    return unless session[:user_id]
+    @current_user ||= User.find(session[:user_id])
   end
 
   private
@@ -48,7 +59,7 @@ class Api::V1::TwerpsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def twerp_params
-      params.require(:twerp).permit(:twerp, :numfavs)
+      params.require(:twerp).permit(:twerp)
     end
 
 end

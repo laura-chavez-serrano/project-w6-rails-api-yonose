@@ -15,10 +15,15 @@ class Api::V1::UsersController < ApplicationController
       render json: user.errors, status: :bad_request # or 400
     end
   end
+
+    # DELETE /username/1
+    def destroy
+      @user.destroy
+    end
   
   private
     def users_params
-      params.permit(:username, :password_digest)
+      params.permit(:username, :password)
     end
 
 end

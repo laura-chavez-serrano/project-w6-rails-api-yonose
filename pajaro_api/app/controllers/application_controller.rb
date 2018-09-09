@@ -12,6 +12,14 @@ class ApplicationController < ActionController::API
   #   end
   # end
 
+  helper_method :current_user
+
+  protected 
+    def current_user
+      return unless session[:user_id]
+      @current_user ||= User.find(session[:user_id])
+    end
+
   def verify_authentication
     user = authenticate_with_http_token do |token, options|
       User.find_by_api_token(token)
